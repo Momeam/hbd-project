@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fcf6f5;
+            font-family: 'Mali', cursive;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* หน้าจอล็อก (Password Screen) */
+        #lock-screen {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 350px;
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Mali', cursive;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: #d4a373;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Mali', cursive;
+            font-size: 16px;
+        }
+
+        button:hover { background-color: #b08968; }
+
+        .error-msg { color: red; font-size: 0.9rem; margin-top: 10px; display: none; }
+
+        /* ส่วนเนื้อหาจดหมาย (ซ่อนไว้ตอนแรก) */
+        #letter-content {
+            display: none; /* ซ่อนไว้ */
+            max-width: 600px;
+            width: 90%;
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            margin: 20px auto;
+            min-height: 80vh;
+        }
+
+        .content-body { white-space: pre-wrap; text-align: left; line-height: 1.8; }
+        .signature { margin-top: 40px; text-align: right; font-weight: bold; color: #d4a373; }
+        
+        /* เวลานับถอยหลัง */
+        #timer-msg { margin-top: 10px; color: #888; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <h2>🔒 กรุณาใส่รหัสผ่าน</h2>
+        <p style="font-size: 0.9rem; color: #666;">ความลับนี้ถูกล็อกไว้</p>
+        
+        <input type="password" id="passwordInput" placeholder="ใส่รหัสผ่านที่นี่...">
+        <br>
+        <button onclick="checkPassword()">เปิดอ่าน</button>
+        
+        <p class="error-msg" id="errorMsg">รหัสผ่านไม่ถูกต้อง</p>
+        <div id="timer-msg"></div>
+    </div>
+
+    <div id="letter-content">
+        <h1 style="text-align: center; color: #d4a373;">สุขสันต์วันเกิด 🎂</h1>
+        <div class="content-body">
+            สวัสดี...
+            ดีใจนะที่เธอจำรหัสผ่านได้
+            
+            ข้อความนี้เราเขียนไว้ล่วงหน้าตั้งนานแล้ว...
+            (พิมพ์ข้อความของคุณต่อได้เลยครับ)
+            
+            ...
+            ขอให้โชคดีนะ
+            </div>
+        <div class="signature">จาก... (ชื่อของคุณ)</div>
+    </div>
+
+    <script>
+        // === ตั้งค่าตรงนี้ ===
+        const TARGET_DATE = new Date(2026, 9, 6, 0, 0, 0).getTime(); // วันที่ 6 ตุลา (เดือน 9)
+        const MY_PASSWORD = "1234"; // <<<< เปลี่ยนรหัสผ่านตรงนี้ครับ! (เช่น วันเกิดเธอ, หรือชื่อเล่น)
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const lockScreen = document.getElementById('lock-screen');
+            const letterContent = document.getElementById('letter-content');
+            const timerMsg = document.getElementById('timer-msg');
+            const now = new Date().getTime();
+
+            // 1. เช็ครหัสผ่านก่อน
+            if (input !== MY_PASSWORD) {
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // 2. ถ้ารหัสถูก -> เช็คเวลาต่อ
+            if (now < TARGET_DATE) {
+                // ยังไม่ถึงเวลา
+                errorMsg.style.display = "none";
+                errorMsg.style.color = "#d4a373";
+                
+                // คำนวณเวลาที่เหลือ
+                const distance = TARGET_DATE - now;
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                timerMsg.innerHTML = `รหัสถูกต้อง! <br>แต่ต้องรออีก ${days} วัน ถึงจะเปิดได้นะ :)`;
+                timerMsg.style.display = "block";
+            } else {
+                // ถึงเวลาแล้ว + รหัสถูก -> เปิดจดหมาย
+                lockScreen.style.display = "none";
+                letterContent.style.display = "block";
+                
+                // อนิเมชั่นค่อยๆ ขึ้นมา
+                letterContent.style.animation = "fadeIn 1.5s";
+            }
+        }
+    </script>
+
+</body>
+</html>
