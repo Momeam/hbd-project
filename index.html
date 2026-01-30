@@ -316,7 +316,7 @@
     </audio>
 
     <audio id="voice-msg">
-        <source src="voice_message.mp3" type="audio/mpeg">
+        <source src="gg.mp3" type="audio/mpeg">
     </audio>
 
     <div id="lock-screen">
@@ -496,6 +496,9 @@
                 <button class="voice-btn" id="voice-trigger-btn" onclick="playVoiceMessage()">
                     <span class="voice-icon">🔊</span> ฟังเสียงจากใจเรา
                 </button>
+                <a href="https://music.youtube.com/playlist?list=PLJwH09cRxWM6max6-KQmJj6jNQnK9xYSH&jct=Nx-0oAQF-uXqr8yerUUOig" target="_blank" class="playlist-btn"><br>
+                    <span>🎵</span> เพลย์ลิสต์ของเรา
+                </a>
             </div>
             
             <div style="margin-top: 20px; text-align: center;">
@@ -591,14 +594,14 @@
             } else {
                 // ถ้าเล่นอยู่ -> หยุดเสียงพูด -> คืนเสียงเพลง
                 voice.pause();
-                bgMusic.volume = 0.03;
+                bgMusic.volume = 0.01;
                 btn.innerHTML = '<span class="voice-icon">🔊</span> ฟังเสียงจากใจเรา';
                 btn.style.backgroundColor = "#a29bfe";
             }
 
             // เมื่อเสียงจบเอง
             voice.onended = function() {
-                bgMusic.volume = 0.03;
+                bgMusic.volume = 0.01;
                 btn.innerHTML = '<span class="voice-icon">🔊</span> ฟังเสียงจากใจเรา';
                 btn.style.backgroundColor = "#a29bfe";
             };
@@ -698,9 +701,9 @@
         }
 
         // 🔴 โค้ดชั่วคราว: สั่งเปิดจดหมายทันทีไม่ต้องใส่รหัส (เอาไว้ตอนเขียน)
-        // ถ้าเขียนเสร็จแล้ว ให้ลบ 2 บรรทัดข้างล่างนี้ทิ้งนะครับ!
-       //document.getElementById('lock-screen').style.display = 'none';
-       // document.getElementById('letter-content').style.display = 'block';
+       
+      // document.getElementById('lock-screen').style.display = 'none';
+        //document.getElementById('letter-content').style.display = 'block';
 
     </script>
 
